@@ -1,0 +1,108 @@
+/* Reset simple */
+*{
+box-sizing: border-box;
+margin: 0;
+padding: 0;
+font-family: Arial, sans-serif;
+}
+
+/* Global / */
+body {
+  background-color: #f4f1ea;
+  color: #333;
+  height: 100vh;
+}
+
+/* / Header & footer / */
+header, footer {
+  background-color: #e6dccb;
+  text-align: center;
+  padding: 10px;
+}
+
+header h1 {
+  font-size: 1.8em;
+}
+
+footer {
+  font-size: 0.8em;
+}
+/* 
+/ Main layout / */
+main {
+  display: flex;
+  height: calc(100vh - 120px);
+}
+
+/* / Menus / */
+.menu {
+  width: 200px;
+  background-color: #ddd2bf;
+  padding: 10px;
+  border-right: 2px solid #c1b59f;
+}
+
+.menu.right {
+  border-right: none;
+  border-left: 2px solid #c1b59f;
+}
+
+.menu h2 {
+  margin-bottom: 10px;
+  font-size: 1.2em;
+}
+
+.menu button {
+  width: 100%;
+  margin-bottom: 8px;
+  padding: 8px;
+  background-color: #f4f1ea;
+  border: 1px solid #aaa;
+  cursor: not-allowed;
+}
+
+/* / Map / */
+#map {
+  flex: 1;
+  margin: 10px;
+  background-color: #c7d2b8;
+  border: 2px dashed #777;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.map-placeholder {
+  text-align: center;
+  font-size: 1.2em;
+  color: #555;
+}
+/* 
+/ Responsive (mobile) */
+@media (max-width: 768px) {
+  main {
+    flex-direction: column;
+  }
+
+  .menu {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    border: none;
+  }
+
+  .menu h2 {
+    display: none;
+  }
+
+  .menu button {
+    width: auto;
+    flex: 1;
+    margin: 2px;
+  }
+
+  #map {
+    min-height: 300px;
+    margin: 5px;
+  }
+}
