@@ -11,6 +11,9 @@
 <header>
   <h1>Idle Community</h1>
   <p>Prototype – version 0.1</p>
+  {% if app.user %}
+      <p>Bonjour : {{ app.user.username }} ✅</p>
+  {% endif %}
 </header>
 
 <main>
