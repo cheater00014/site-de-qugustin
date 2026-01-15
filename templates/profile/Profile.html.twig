@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon profil{% endblock %}
+
+{% block body %}
+<h1>Mon profil</h1>
+
+<img src="{{ app.user.avatar ? asset('uploads/avatars/' ~ app.user.avatar) : asset('images/defaults/default.png') }}"
+     alt="Avatar"
+     style="width:120px; height:120px; border-radius:50%; object-fit:cover; margin-bottom:15px;">
+
+<p><strong>Pseudo :</strong> {{ app.user.username }}</p>
+<p><strong>Email :</strong> {{ app.user.email }}</p>
+
+<a href="{{ path('app_profile_edit') }}">
+    <button>✏️ Modifier mon profil</button>
+</a>
+
+<hr>
+
+<form method="post" action="{{ path('app_profile_delete') }}"
+      onsubmit="return confirm('Supprimer définitivement ton compte ?');">
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('delete_account') }}">
+    <button style="color:red">🗑️ Supprimer mon compte</button>
+</form>
+{% endblock %}

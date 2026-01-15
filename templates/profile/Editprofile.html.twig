@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier mon profil{% endblock %}
+
+{% block body %}
+<h1>Modifier mon profil</h1>
+
+{# Avatar actuel / preview dynamique #}
+<img
+    id="avatarPreview"
+    src="{{ app.user.avatar ? asset('uploads/avatars/' ~ app.user.avatar) : asset('images/defaults/default.png') }}"
+    alt="Avatar"
+    style="width:120px; height:120px; border-radius:50%; object-fit:cover; margin-bottom:10px; cursor:pointer;"
+    title="Cliquer pour changer l'avatar">
+
+{{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
+    {{ form_row(form.username) }}
+    {{ form_row(form.email) }}
+
+    {# Champ avatar MANUEL, mais Symfony va le reconnaître #}
+    <input type="file" id="avatarInput" name="{{ form.avatar.vars.full_name }}" accept="image/*" style="display:none;">
+
+    <button type="submit">💾 Enregistrer</button>
+{{ form_end(form) }}
+
+<a href="{{ path('app_profile') }}">⬅️ Retour au profil</a>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const input = document.getElementById('avatarInput');
+    const preview = document.getElementById('avatarPreview');
+
+    if (!input || !preview) return;
+
+    // Cliquer sur l'image ouvre le file picker
+    preview.addEventListener('click', () => input.click());
+
+    // Preview dynamique
+    input.addEventListener('change', function () {
+        const file = this.files[0];
+        if (!file) return;
+
+        preview.src = URL.createObjectURL(file);
+    });
+});
+</script>
+{% endblock %}

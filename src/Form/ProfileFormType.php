@@ -4,37 +4,39 @@ namespace App\Form;
 
 use App\Entity\Player;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
 
-class RegistrationFormType extends AbstractType
+class ProfileFormType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username', TextType::class)
-            ->add('email', EmailType::class)
-            ->add('password', PasswordType::class)
+            ->add('username', TextType::class, [
+                'label' => 'Pseudo'
+            ])
+            ->add('email', EmailType::class, [
+                'label' => 'Email'
+            ])
             ->add('avatar', FileType::class, [
-                'label' => false,       // pas de label généré
-                'mapped' => false,      
+                'label' => 'Avatar',
+                'mapped' => false,
                 'required' => false,
                 'constraints' => [
                     new File([
                         'maxSize' => '20M',
-                        'mimeTypes' => ['image/jpeg','image/png','image/webp'],
-                        'mimeTypesMessage' => 'Merci de télécharger une image valide (jpeg, png, webp)',
+                        'mimeTypes' => ['image/jpeg', 'image/png', 'image/webp'],
+                        'mimeTypesMessage' => 'Image invalide (jpeg, png, webp uniquement)',
                     ])
                 ],
             ]);
     }
 
-    public function configureOptions(OptionsResolver $resolver): void
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => Player::class,

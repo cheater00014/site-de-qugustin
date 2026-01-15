@@ -5,10 +5,56 @@
 {% block body %}
 <h1>Créer un compte</h1>
 
-{{ form_start(registrationForm) }}
+{{ form_start(registrationForm, {'attr': {'enctype': 'multipart/form-data'}}) }}
     {{ form_row(registrationForm.username) }}
     {{ form_row(registrationForm.email) }}
     {{ form_row(registrationForm.password) }}
+
+    <div>
+    {{ form_label(registrationForm.avatar) }}
+    {{ form_widget(registrationForm.avatar, {
+        'attr': {
+            'id': 'avatarInput',
+            'accept': 'image/*'
+        }
+    }) }}
+    {{ form_errors(registrationForm.avatar) }}
+</div>
+
+<img id="avatarPreview"
+     src=""
+     style="display:none; width:100px; height:100px; border-radius:50%; margin-top:10px; object-fit:cover;">
+
     <button type="submit">S’inscrire</button>
 {{ form_end(registrationForm) }}
+
+<p>Déjà inscrit ? <a href="{{ path('app_login') }}">Connecte-toi</a></p>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const input = document.querySelector('input[type="file"]');
+    const preview = document.getElementById('avatarPreview');
+
+    if (!input || !preview) return;
+
+    input.addEventListener('change', function () {
+        const file = this.files[0];
+        if (!file) return;
+
+        preview.src = URL.createObjectURL(file);
+        preview.style.display = 'block';
+    });
+});
+</script>
+
+<style>
+#avatarPreview {
+    display: none;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    margin-top: 10px;
+    object-fit: cover;
+}
+</style>
 {% endblock %}
